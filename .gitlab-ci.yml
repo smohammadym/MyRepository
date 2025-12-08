@@ -1,0 +1,38 @@
+image: docker:latest
+services:
+  - docker:dind
+
+stages:
+  - build
+  - test
+
+cache:
+  paths:
+    - .gradle/wrapper
+    - .gradle/caches
+
+build:
+  image: gradle:jdk21
+  stage: build
+  script:
+    - gradle assemble
+  artifacts:
+    paths:
+      - build/libs/*.jar
+    reports:
+      junit: build/test-results/test/**/TEST-*.xml
+    expire_in: 1 week
+
+test:
+  image: gradle:jdk21
+  stage: test
+  script:
+    - gradle check
+  artifacts:
+    when: always
+    reports:
+      junit: build/test-results/test/**/TEST-*.xml
+    expire_in: 1 week
+
+after_script:
+  - echo "End CI"

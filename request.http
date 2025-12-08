@@ -1,0 +1,162 @@
+
+#########################
+### Sign up & Register ...
+#########################
+
+### Sign up
+POST http://localhost:8080/auth/signup
+Content-Type: application/json
+
+{
+  "username": "Michael",
+  "password": "michael1234"
+}
+
+
+### Sign in
+POST http://localhost:8080/auth/signin
+Content-Type: application/json
+
+{
+  "username": "Michael",
+  "password": "michael1234"
+}
+
+> {%
+    client.global.set("auth_token", response.body.accessToken);
+%}
+
+
+
+#######################
+### Person ...
+#######################
+
+### Get all persons
+GET http://localhost:8080/persons
+Authorization: Bearer {{auth_token}}
+
+
+### Get person by id
+GET http://localhost:8080/persons/1
+Authorization: Bearer {{auth_token}}
+
+
+### Patch person by id
+PATCH http://localhost:8080/persons/3
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "username": "Michael2"
+}
+
+
+### Delete person by id
+DELETE http://localhost:8080/persons/1
+Authorization: Bearer {{auth_token}}
+
+
+
+#######################
+### Item ...
+#######################
+
+### Get all items
+GET http://localhost:8080/items
+Authorization: Bearer {{auth_token}}
+
+
+### Get all items by name
+GET http://localhost:8080/items?name=Aufgabe
+Authorization: Bearer {{auth_token}}
+
+
+### Get all items by tag name
+GET http://localhost:8080/items?tagName=Dringend
+Authorization: Bearer {{auth_token}}
+
+
+### Get all items by item name and tag name
+GET http://localhost:8080/items?name=Aufgabe&tagName=Dringend
+Authorization: Bearer {{auth_token}}
+
+
+### Get item by id
+GET http://localhost:8080/items/1
+Authorization: Bearer {{auth_token}}
+
+
+### Insert Item
+POST http://localhost:8080/items
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "name": "My Test Item",
+  "description": "This is my test item to test post request.",
+  "personId": 1,
+  "tagIds": [
+    1
+  ]
+}
+
+### Patch Item
+PATCH http://localhost:8080/items/5
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "name": "My Updated Test Item"
+}
+
+
+### Delete item by id
+DELETE http://localhost:8080/items/1
+Authorization: Bearer {{auth_token}}
+
+
+
+#######################
+### Tag ...
+#######################
+
+### Get all tags
+GET http://localhost:8080/tags
+Authorization: Bearer {{auth_token}}
+
+
+### Get all tags by name
+GET http://localhost:8080/tags?name=Dringend
+Authorization: Bearer {{auth_token}}
+
+
+### Get tag by id
+GET http://localhost:8080/tags/1
+Authorization: Bearer {{auth_token}}
+
+
+### Insert Tag
+POST http://localhost:8080/tags
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "name": "Super Tag"
+}
+
+
+### Patch Tag
+PATCH http://localhost:8080/tags/5
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "name": "Updated Tag"
+}
+
+
+### Delete Tag by id
+DELETE http://localhost:8080/tags/5
+Authorization: Bearer {{auth_token}}
+
